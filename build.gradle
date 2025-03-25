@@ -5,11 +5,11 @@ plugins {
 }
 
 group = 'kr.co.sboard'
-version = '0.0.3-SNAPSHOT'
+version = '0.0.2-SNAPSHOT'
 
 // application.properties 파일 참조를 위한 스크립트
 processResources {
-    filesMatching("application.yml"){
+    filesMatching("application.yml") {
         expand(project.properties)
     }
 }
@@ -47,8 +47,6 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-
-    // 엔티티 -> DTO 변환을 수월하게 지원해주는 라이브러리
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
     implementation("org.modelmapper:modelmapper:3.2.2")
 }
