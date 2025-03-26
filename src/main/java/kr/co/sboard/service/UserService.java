@@ -1,8 +1,10 @@
 package kr.co.sboard.service;
 
 import jakarta.mail.Message;
+import jakarta.mail.Session;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kr.co.sboard.dto.UserDTO;
 import kr.co.sboard.entity.User;
@@ -27,7 +29,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender mailSender;
 
-    private final HttpSession session;
+    private final HttpServletRequest request;
 
     public void register(UserDTO userDTO){
 
@@ -56,6 +58,7 @@ public class UserService {
                 int code = sendEmailCode(value);
 
                 // 인증코드 비교를 하기 위해 세션 저장
+                HttpSession session = request.getSession();
                 session.setAttribute("authCode", code);
             }
         }else if(type.equals("hp")){
