@@ -37,6 +37,11 @@ public class Article {
         }
     }
 
+    // 추가 필드
+    //@Transient // 엔티티 속성에서 테이블 매핑에서 제외하는 어노테이션
+    //private String nick;
+
+
     @CreationTimestamp
     private LocalDateTime wdate;
 
