@@ -6,6 +6,7 @@ import kr.co.sboard.dto.ArticleDTO;
 import kr.co.sboard.dto.PageRequestDTO;
 import kr.co.sboard.dto.PageResponseDTO;
 import kr.co.sboard.entity.Article;
+import kr.co.sboard.entity.User;
 import kr.co.sboard.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -90,13 +91,20 @@ public class ArticleService {
     public int register(ArticleDTO articleDTO){
 
         // 엔티티 변환
+        User user = User.builder()
+                .uid(articleDTO.getWriter())
+                .build();
+
+        // 엔티티 변환
         Article article= modelMapper.map(articleDTO, Article.class);
+        article.setUser(user);
+
         log.info("Article DTO: {}", article);
 
         // JPA 저장
         // Article savedArticle = articleRepository.save(article);
 
-        // Mybatis 저장'
+        //Mybatis 저장'
         articleMapper.insertArticle(articleDTO);
 
         // 매개변수로 전달되는 articleDTO의 속성에 mybatis가 INSERT한 데이터의 pk를 반환
