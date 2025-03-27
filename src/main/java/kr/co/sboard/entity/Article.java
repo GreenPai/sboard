@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -27,7 +28,11 @@ public class Article {
     private int comment;
     private int file;
     private int hit;
-    private String writer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer")
+    private User user;
+
     private String regip;
 
     @PrePersist
@@ -41,6 +46,8 @@ public class Article {
     //@Transient // 엔티티 속성에서 테이블 매핑에서 제외하는 어노테이션
     //private String nick;
 
+    @OneToMany(mappedBy = "ano")  // mappedBy 속성은 매핑되는 엔티티의 FK 컬럼이다.
+    private List<File> files;
 
     @CreationTimestamp
     private LocalDateTime wdate;

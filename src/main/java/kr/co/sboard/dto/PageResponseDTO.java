@@ -21,6 +21,8 @@ public class PageResponseDTO {
     private int startNo;
     private int start, end;
     private boolean prev, next;
+    private String searchType;
+    private String keyword;
 
     @Builder
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<ArticleDTO> dtoList, int total) {
@@ -30,6 +32,9 @@ public class PageResponseDTO {
         this.total = total;
         this.dtoList = dtoList;
 
+        this.searchType = pageRequestDTO.getSearchType();
+        this.keyword = pageRequestDTO.getKeyword();
+
         this.startNo = total - ((pg-1) * size);
         this.end = (int)(Math.ceil(this.pg / 10.0)) * 10;
         this.start = this.end - 9;
@@ -38,5 +43,6 @@ public class PageResponseDTO {
         this.end = end > last ? last : end;
         this.prev = this.start > 1;
         this.next = total > this.end * this.size;
+
     }
 }

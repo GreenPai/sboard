@@ -25,9 +25,21 @@ public class ArticleController {
     private final ArticleService articleService;
     private final FileService fileService;
 
+    @GetMapping("/article/search")
+    public String search(String searchType, String keyword, PageRequestDTO pageRequestDTO, HttpServletRequest httpServletRequest, Model model) {
+
+        // 서비스 호출
+        PageResponseDTO pageResponseDTO = articleService.searchAll(pageRequestDTO);
+
+        model.addAttribute("pageResponseDTO", pageResponseDTO);
+        log.info("pageRequestDTO : {}", pageRequestDTO);
+        return "/article/searchList";
+    }
+
     @GetMapping("/article/list")
     public String list(Model model, PageRequestDTO pageRequestDTO){
 
+        // 전체 글 조회 서비스 호출(JPA)
         PageResponseDTO pageResponseDTO = articleService.findAll(pageRequestDTO);
         model.addAttribute("pageResponseDTO", pageResponseDTO);
 
@@ -40,7 +52,13 @@ public class ArticleController {
     }
 
     @GetMapping("/article/view")
-    public String view(){
+    public String view(int no, Model model){
+        
+        // 글 조회 서비스 호출
+        ArticleDTO articleDTO = articleService.findById(no);
+
+        System.out.println("articleDTO :"+articleDTO);
+        model.addAttribute("articleDTO", articleDTO);
         return "/article/view";
     }
 
